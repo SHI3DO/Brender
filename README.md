@@ -2,7 +2,7 @@
 	<img
 		width="300"
 		alt="Brender"
-		src="https://raw.githubusercontent.com/PARF4IT/Brender/main/Brender-client/src/brender-logo.png">
+		src="https://raw.githubusercontent.com/SHI3DO/Brender/main/Brender-client/src/brender-logo.png">
 </h1>
 
 <h3 align="center">
