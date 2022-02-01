@@ -1,0 +1,17 @@
+{
+   "name": "brender-backend",
+   "version": "1.0.0",
+   "scripts": {
+      "start": "nodemon src/index.js",
+      "format": "npx prettier --write ."
+   },
+   "repository": "https://github.com/PARF4IT/Brender",
+   "author": "SHI3DO",
+   "license": "MIT",
+   "dependencies": {
+      "dotenv": "^14.3.2",
+      "express": "^4.17.2",
+      "mongoose": "^6.1.8",
+      "nodemon": "^2.0.15"
+   }
+}
