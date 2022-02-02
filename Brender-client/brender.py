@@ -85,10 +85,6 @@ def SettingsBtn_clicked():
 
 
 def ExitBtn_clicked():
-    f = open('./src/status.txt', 'w')
-    f.write('Shutting down the app.')
-    f.close()
-    shutil.rmtree('./runtime')
     QCoreApplication.quit()
 
 
@@ -116,8 +112,9 @@ class BrenderGUI(QWidget):
         self.initUI()
 
     def initUI(self):
-        downloadthread = DownloadBlenderthread(self)
-        downloadthread.start()
+        if not os.path.isdir('./runtime/blender'):
+            downloadthread = DownloadBlenderthread(self)
+            downloadthread.start()
         # /////////////////////////////////////////////////////////////////////////////
 
         pjgroupbox = QGroupBox('Project')
