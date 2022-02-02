@@ -220,8 +220,8 @@ class BrenderSettingsGUI(QWidget):
         cvhbox.addWidget(checkbox)
         checkbox.setChecked(1)
         cvbox.addLayout(cvhbox)
-        for i in range(0, len(gpu_list)):
-            checkbox = QCheckBox(f'{gpu_list[i]}')
+        for gpu_ in gpu_list:
+            checkbox = QCheckBox(gpu_)
             checkbox.setChecked(1)
             hbox = QHBoxLayout()
             hbox.addWidget(checkbox)
@@ -251,8 +251,7 @@ class BrenderSettingsGUI(QWidget):
         BackBtn.clicked.connect(lambda: SettingsBackBtn_clicked())
         SaveBtn.clicked.connect(lambda: self.SettingsSaveBtn_clicked(usernameLine, passwordLine, cpnameLine))
 
-        for i in range(0, len(computegroupbox.findChildren(QCheckBox))):
-            cv = computegroupbox.findChildren(QCheckBox)[i]
+        for cv in computegroupbox.findChildren(QCheckBox):
             print(cv.isChecked())
 
         grid = QGridLayout()
