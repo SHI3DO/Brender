@@ -8,6 +8,7 @@ from PyQt5.QtCore import *
 from PyQt5 import *
 import os
 import platform
+from modules import downloadblender
 
 
 def BrenderBox():
@@ -20,31 +21,6 @@ def BrenderBox():
 
     vbox = QVBoxLayout()
     vbox.addWidget(pix_label)
-    groupbox.setLayout(vbox)
-
-    return groupbox
-
-
-def ProjectBox():
-    groupbox = QGroupBox('Project')
-
-    StatusLabel = QLabel('Status')
-    StatusLabel.setAlignment(Qt.AlignCenter)
-    NameLabel = QLabel('Name')
-    NameLabel.setAlignment(Qt.AlignCenter)
-    RendertimeLabel = QLabel('Rendering  for')
-    RendertimeLabel.setAlignment(Qt.AlignCenter)
-    RemainingtimeLabel = QLabel('Remaining')
-    RemainingtimeLabel.setAlignment(Qt.AlignCenter)
-    MethodLabel = QLabel('Compute Method')
-    MethodLabel.setAlignment(Qt.AlignCenter)
-
-    vbox = QVBoxLayout()
-    vbox.addWidget(StatusLabel)
-    vbox.addWidget(NameLabel)
-    vbox.addWidget(RendertimeLabel)
-    vbox.addWidget(RemainingtimeLabel)
-    vbox.addWidget(MethodLabel)
     groupbox.setLayout(vbox)
 
     return groupbox
@@ -109,6 +85,9 @@ def SettingsBtn_clicked():
 
 
 def ExitBtn_clicked():
+    f = open('./src/status.txt', 'w')
+    f.write('Shutting down the app.')
+    f.close()
     shutil.rmtree('./runtime')
     QCoreApplication.quit()
 
@@ -117,13 +96,49 @@ def SettingsBackBtn_clicked():
     gui.setCurrentIndex(gui.currentIndex() - 1)
 
 
+class DownloadBlenderthread(QThread):
+    def __init__(self, parent):
+        super(DownloadBlenderthread, self).__init__()
+        self.parent = parent
+
+    def run(self):
+        downloadblender.download()
+
+
 class BrenderGUI(QWidget):
 
     def __init__(self):
         super().__init__()
+        self.timer = QTimer(self)
+        self.timer.start(1000)
+        self.timer.timeout.connect(lambda: self.timeout())
+        self.StatusLabel = QLabel('')
         self.initUI()
 
     def initUI(self):
+        downloadthread = DownloadBlenderthread(self)
+        downloadthread.start()
+        # /////////////////////////////////////////////////////////////////////////////
+
+        pjgroupbox = QGroupBox('Project')
+        self.StatusLabel.setAlignment(Qt.AlignCenter)
+        NameLabel = QLabel('Name')
+        NameLabel.setAlignment(Qt.AlignCenter)
+        RendertimeLabel = QLabel('Rendering  for')
+        RendertimeLabel.setAlignment(Qt.AlignCenter)
+        RemainingtimeLabel = QLabel('Remaining')
+        RemainingtimeLabel.setAlignment(Qt.AlignCenter)
+        MethodLabel = QLabel('Compute Method')
+        MethodLabel.setAlignment(Qt.AlignCenter)
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.StatusLabel)
+        vbox.addWidget(NameLabel)
+        vbox.addWidget(RendertimeLabel)
+        vbox.addWidget(RemainingtimeLabel)
+        vbox.addWidget(MethodLabel)
+        pjgroupbox.setLayout(vbox)
+        # /////////////////////////////////////////////////////////////////////////////
         groupbox = QGroupBox('Menu')
         SettingsBtn = QPushButton('Settings')
         PauseBtn = QPushButton('Pause')
@@ -141,15 +156,21 @@ class BrenderGUI(QWidget):
 
         grid = QGridLayout()
         grid.addWidget(BrenderBox(), 0, 0)
-        grid.addWidget(ProjectBox(), 1, 0)
+        grid.addWidget(pjgroupbox, 1, 0)
         grid.addWidget(StatsBox(), 2, 0)
         grid.addWidget(SessionBox(), 3, 0)
         grid.addWidget(WorkingBox(), 4, 0)
         grid.addWidget(groupbox, 5, 0)
         self.setLayout(grid)
 
-    def aaatimeout(self):
-        print("s")
+    def timeout(self):
+        f = open('./src/status.txt', 'r')
+        statustext = f.read()
+        f.close()
+        try:
+            self.StatusLabel.setText(f'Status: {statustext}')
+        except Exception as e:
+            print(e)
 
 
 class BrenderSettingsGUI(QWidget):
@@ -257,10 +278,6 @@ class BrenderSettingsGUI(QWidget):
         f.close()
 
 
-def startTimer():
-    ptimer.start()
-
-
 if __name__ == '__main__':
     dir.make()
     app = QApplication(sys.argv)
@@ -273,7 +290,4 @@ if __name__ == '__main__':
     gui.resize(600, 1000)
     gui.setWindowIcon(QIcon('./src/brender-logo.png'))
     gui.show()
-    ptimer = QTimer()
-    ptimer.setInterval(1000)
-    startTimer()
     app.exec_()
