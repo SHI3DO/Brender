@@ -12,8 +12,8 @@ from modules import downloadblender
 
 
 def BrenderBox():
-    groupbox = QGroupBox('Brender')
-    brenderpix = QPixmap('./src/brender_banner.png')
+    groupbox = QGroupBox("Brender")
+    brenderpix = QPixmap("./src/brender_banner.png")
 
     pix_label = QLabel()
     pix_label.setPixmap(brenderpix)
@@ -27,13 +27,13 @@ def BrenderBox():
 
 
 def StatsBox():
-    groupbox = QGroupBox('Global Stats')
+    groupbox = QGroupBox("Global Stats")
 
-    radio1 = QRadioButton('Radio1')
-    radio2 = QRadioButton('Radio2')
-    radio3 = QRadioButton('Radio3')
+    radio1 = QRadioButton("Radio1")
+    radio2 = QRadioButton("Radio2")
+    radio3 = QRadioButton("Radio3")
     radio1.setChecked(True)
-    checkbox = QCheckBox('Independent Checkbox')
+    checkbox = QCheckBox("Independent Checkbox")
     checkbox.setChecked(True)
 
     vbox = QVBoxLayout()
@@ -47,11 +47,11 @@ def StatsBox():
 
 
 def SessionBox():
-    groupbox = QGroupBox('Session info')
+    groupbox = QGroupBox("Session info")
 
-    radio1 = QRadioButton('Radio1')
-    radio2 = QRadioButton('Radio2')
-    radio3 = QRadioButton('Radio3')
+    radio1 = QRadioButton("Radio1")
+    radio2 = QRadioButton("Radio2")
+    radio3 = QRadioButton("Radio3")
     radio1.setChecked(True)
 
     vbox = QVBoxLayout()
@@ -64,11 +64,11 @@ def SessionBox():
 
 
 def WorkingBox():
-    groupbox = QGroupBox('Session info')
+    groupbox = QGroupBox("Session info")
 
-    radio1 = QRadioButton('Radio1')
-    radio2 = QRadioButton('Radio2')
-    radio3 = QRadioButton('Radio3')
+    radio1 = QRadioButton("Radio1")
+    radio2 = QRadioButton("Radio2")
+    radio3 = QRadioButton("Radio3")
     radio1.setChecked(True)
 
     vbox = QVBoxLayout()
@@ -102,30 +102,29 @@ class DownloadBlenderthread(QThread):
 
 
 class BrenderGUI(QWidget):
-
     def __init__(self):
         super().__init__()
         self.timer = QTimer(self)
         self.timer.start(1000)
         self.timer.timeout.connect(lambda: self.timeout())
-        self.StatusLabel = QLabel('')
+        self.StatusLabel = QLabel("")
         self.initUI()
 
     def initUI(self):
-        if not os.path.isdir('./runtime/blender'):
+        if not os.path.isdir("./runtime/blender"):
             downloadthread = DownloadBlenderthread(self)
             downloadthread.start()
         # /////////////////////////////////////////////////////////////////////////////
 
-        pjgroupbox = QGroupBox('Project')
+        pjgroupbox = QGroupBox("Project")
         self.StatusLabel.setAlignment(Qt.AlignCenter)
-        NameLabel = QLabel('Name')
+        NameLabel = QLabel("Name")
         NameLabel.setAlignment(Qt.AlignCenter)
-        RendertimeLabel = QLabel('Rendering  for')
+        RendertimeLabel = QLabel("Rendering  for")
         RendertimeLabel.setAlignment(Qt.AlignCenter)
-        RemainingtimeLabel = QLabel('Remaining')
+        RemainingtimeLabel = QLabel("Remaining")
         RemainingtimeLabel.setAlignment(Qt.AlignCenter)
-        MethodLabel = QLabel('Compute Method')
+        MethodLabel = QLabel("Compute Method")
         MethodLabel.setAlignment(Qt.AlignCenter)
 
         vbox = QVBoxLayout()
@@ -136,11 +135,11 @@ class BrenderGUI(QWidget):
         vbox.addWidget(MethodLabel)
         pjgroupbox.setLayout(vbox)
         # /////////////////////////////////////////////////////////////////////////////
-        groupbox = QGroupBox('Menu')
-        SettingsBtn = QPushButton('Settings')
-        PauseBtn = QPushButton('Pause')
-        PassBtn = QPushButton('Pass this project')
-        ExitBtn = QPushButton('Exit')
+        groupbox = QGroupBox("Menu")
+        SettingsBtn = QPushButton("Settings")
+        PauseBtn = QPushButton("Pause")
+        PassBtn = QPushButton("Pass this project")
+        ExitBtn = QPushButton("Exit")
         vbox = QGridLayout()
         vbox.addWidget(SettingsBtn, 0, 0)
         vbox.addWidget(PauseBtn, 0, 1)
@@ -161,11 +160,11 @@ class BrenderGUI(QWidget):
         self.setLayout(grid)
 
     def timeout(self):
-        f = open('./src/status.txt', 'r')
+        f = open("./src/status.txt", "r")
         statustext = f.read()
         f.close()
         try:
-            self.StatusLabel.setText(f'Status: {statustext}')
+            self.StatusLabel.setText(f"Status: {statustext}")
         except Exception as e:
             print(e)
 
@@ -177,23 +176,23 @@ class BrenderSettingsGUI(QWidget):
 
     def SettingsUI(self):
         # /////////////////////////////////////////////////////////////////////////////
-        groupbox = QGroupBox('Menu')
-        BackBtn = QPushButton('Back')
-        SaveBtn = QPushButton('Save')
+        groupbox = QGroupBox("Menu")
+        BackBtn = QPushButton("Back")
+        SaveBtn = QPushButton("Save")
         vbox = QGridLayout()
         vbox.addWidget(BackBtn, 0, 0)
         vbox.addWidget(SaveBtn, 0, 1)
         groupbox.setLayout(vbox)
         # /////////////////////////////////////////////////////////////////////////////
-        authgroupbox = QGroupBox('Authentication')
-        usernameLabel = QLabel('Username:')
-        passwordLabel = QLabel('Password:')
-        if os.path.isfile('./src/config.txt'):
-            f = open('./src/config.txt', 'r')
+        authgroupbox = QGroupBox("Authentication")
+        usernameLabel = QLabel("Username:")
+        passwordLabel = QLabel("Password:")
+        if os.path.isfile("./src/config.txt"):
+            f = open("./src/config.txt", "r")
             content = f.readlines()
             f.close()
-            usernameLine = QLineEdit(f'{content[0].strip()}')
-            passwordLine = QLineEdit(f'{content[1].strip()}')
+            usernameLine = QLineEdit(f"{content[0].strip()}")
+            passwordLine = QLineEdit(f"{content[1].strip()}")
         else:
             usernameLine = QLineEdit()
             passwordLine = QLineEdit()
@@ -209,10 +208,10 @@ class BrenderSettingsGUI(QWidget):
         auvbox.addLayout(auhbox2)
         authgroupbox.setLayout(auvbox)
         # /////////////////////////////////////////////////////////////////////////////
-        computegroupbox = QGroupBox('Compute devices')
+        computegroupbox = QGroupBox("Compute devices")
         cvbox = QVBoxLayout()
         gpu_list = gpu.getname()
-        checkbox = QCheckBox('CPU')
+        checkbox = QCheckBox("CPU")
         cvhbox = QHBoxLayout()
         cvhbox.addWidget(checkbox)
         checkbox.setChecked(1)
@@ -225,20 +224,20 @@ class BrenderSettingsGUI(QWidget):
             cvbox.addLayout(hbox)
         computegroupbox.setLayout(cvbox)
         # /////////////////////////////////////////////////////////////////////////////
-        opgroupbox = QGroupBox('Advanced options')
-        cpnameLabel = QLabel('Computer name:')
-        if os.path.isfile('./src/config.txt'):
-            f = open('./src/config.txt', 'r')
+        opgroupbox = QGroupBox("Advanced options")
+        cpnameLabel = QLabel("Computer name:")
+        if os.path.isfile("./src/config.txt"):
+            f = open("./src/config.txt", "r")
             content = f.readlines()
             f.close()
-            cpnameLine = QLineEdit(f'{content[2].strip()}')
+            cpnameLine = QLineEdit(f"{content[2].strip()}")
         else:
             cpnameLine = QLineEdit()
         ophbox1 = QHBoxLayout()
         ophbox1.addWidget(cpnameLabel)
         ophbox1.addWidget(cpnameLine)
         ophbox2 = QHBoxLayout()
-        checkbox1 = QCheckBox('Auto sign in')
+        checkbox1 = QCheckBox("Auto sign in")
         ophbox2.addWidget(checkbox1)
         opvbox = QVBoxLayout()
         opvbox.addLayout(ophbox1)
@@ -246,7 +245,9 @@ class BrenderSettingsGUI(QWidget):
         opgroupbox.setLayout(opvbox)
         # /////////////////////////////////////////////////////////////////////////////
         BackBtn.clicked.connect(lambda: SettingsBackBtn_clicked())
-        SaveBtn.clicked.connect(lambda: self.SettingsSaveBtn_clicked(usernameLine, passwordLine, cpnameLine))
+        SaveBtn.clicked.connect(
+            lambda: self.SettingsSaveBtn_clicked(usernameLine, passwordLine, cpnameLine)
+        )
 
         for cv in computegroupbox.findChildren(QCheckBox):
             print(cv.isChecked())
@@ -263,18 +264,18 @@ class BrenderSettingsGUI(QWidget):
         username = usernameLine.text().strip()
         password = passwordLine.text().strip()
         pcname = cpnameLine.text().strip()
-        if username == '':
+        if username == "":
             username = "brender"
-        if password == '':
+        if password == "":
             password = "brender"
-        if pcname == '':
+        if pcname == "":
             pcname = str(platform.node())
-        f = open("./src/config.txt", 'w')
+        f = open("./src/config.txt", "w")
         f.write(f"{username}\n{password}\n{pcname}")
         f.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     dir.make()
     app = QApplication(sys.argv)
     gui = QStackedWidget()
@@ -282,8 +283,8 @@ if __name__ == '__main__':
     settings = BrenderSettingsGUI()
     gui.addWidget(main)
     gui.addWidget(settings)
-    gui.setWindowTitle('Brender')
+    gui.setWindowTitle("Brender")
     gui.resize(600, 1000)
-    gui.setWindowIcon(QIcon('./src/brender-logo.png'))
+    gui.setWindowIcon(QIcon("./src/brender-logo.png"))
     gui.show()
     app.exec_()

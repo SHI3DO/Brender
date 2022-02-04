@@ -2,10 +2,10 @@ import GPUtil
 
 
 def getname():
-    gpus = GPUtil.getGPUs()
+    gpu_list = GPUtil.getGPUs()
 
     namelist = []
-    for i in range(0, len(gpus)):
-        namelist.append(gpus[i].name)
+    for gpu_ in gpu_list:
+        namelist.append(gpu_.name)
 
     return namelist
