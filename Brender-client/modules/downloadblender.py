@@ -1,6 +1,8 @@
 import requests
 import shutil
 import os
+from modules.api import call_api
+import re
 
 
 def urldownload(url, filename):
@@ -17,10 +19,6 @@ def urldownload(url, filename):
             if rw % 1000 == 0:
                 percentage = round((int(dw) / int(total_length)) * 100)
                 BDS.update_status(f"Downloading {percentage}%")
-
-
-from modules.api import call_api
-import re
 
 
 class Blender_Download_Status:
