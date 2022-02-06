@@ -1,0 +1,12 @@
+{
+    "author": "example",
+    "data": {
+        "mongo": {
+            "host": "localhost",
+            "user": "user",
+            "password": "1q2w3e4r",
+            "db": "myFirstDatabase"
+        },
+        "salt": "salt"
+    }
+}
