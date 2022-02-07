@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "STR-HK",
+      "name": "STR.HK",
+      "avatar_url": "https://avatars.githubusercontent.com/u/78652371?v=4",
+      "profile": "https://github.com/STR-HK",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Brender",
+  "projectOwner": "SHI3DO",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
